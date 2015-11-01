@@ -1,0 +1,2 @@
+{:require [color-picker.app]
+ :compiler-options {:devcards true}}

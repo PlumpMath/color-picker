@@ -1,9 +1,12 @@
 (ns color-picker.app
   (:require [om.next :as om :refer-macros [defui]]
             [om.dom :as dom]
-            [goog.dom :as gdom]))
+            [goog.dom :as gdom]
+            [devcards.core :as dc])
+  (:require-macros [devcards.core :refer [defcard]]))
 
 (enable-console-print!)
+(devcards.core/start-devcard-ui!)
 
 (defonce app-state (atom {:count 0}))
 
@@ -17,16 +20,16 @@
           #js {:onClick
                (fn [e]
                  (swap! app-state update-in [:count] inc))}
-          "Click me!")))))
+          "Click me!!")))))
 
 (def reconciler
   (om/reconciler {:state app-state}))
 
 (def node (gdom/getElement "app"))
 
-(.log js/console node)
+(om/add-root! reconciler
+              Counter
+              node)
 
-(defn run []
-  (om/add-root! reconciler
-                Counter
-                node))
+(defcard hi-world
+  "Hi world!")
